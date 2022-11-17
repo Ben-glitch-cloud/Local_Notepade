@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link href="/css/EditNote.css" rel="stylesheet"  type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="formContaner">
+        <div class="formContanerItem">   
+            <form action="/edit_note/<%= id %>" method="post" id="usrform">
+                <nav class="editNavBar"> 
+                    <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="m12 20l-8-8l8-8l1.425 1.4l-5.6 5.6H20v2H7.825l5.6 5.6Z"/></svg></a>
+                    <input type="text" name="title" class="titleNote" id="titleArea" value="<%= title %>" oninput="MySeconedFunaction()"> 
+                </nav> 
+                <div class="noteArea">  
+                    <div class="noteAreaMes">
+                        <p id="messageEdited">Note has been edited</p> 
+                        <p id="titleMessageEdited">Title has been edited</p>
+                    </div>
+                    <textarea name="note" form="usrform" class="formNoteArea" id="noetArea" rows="4" oninput="MyFunaction()"><%= blog %></textarea> 
+                    <div class="editDropDownCon">
+                        <button type="submit" id="submitForm" class="submitForm"><svg xmlns="http://www.w3.org/2000/svg" width="4em" height="4em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 21v-2.125l5.3-5.3l2.125 2.125l-5.3 5.3Zm-9-5v-2h7v2Zm17.125-1L18 12.875l.725-.725q.275-.275.7-.275q.425 0 .7.275l.725.725q.275.275.275.7q0 .425-.275.7ZM3 12v-2h11v2Zm0-4V6h11v2Z"/></svg></button> 
+                        <div class="messageDropDown" id="messageDrop">
+                            <p id="editMessageDropDown">You must edit your note or title first before saving it.</p>
+                        </div>
+                    </div>
+                </div>
+            </form>  
+        </div>
+    </div>
+</body> 
+    <script>   
+
+        let oldText = '<%= blog %>'
+        let editTextArea = document.getElementById('noetArea') 
+        let submitForm = document.getElementById('submitForm')  
+        let messageEdited = document.getElementById('messageEdited') 
+        let editMessageDropDown = document.getElementById('editMessageDropDown') 
+        let messageDropDown = document.getElementById('messageDrop')
+
+        submitForm.disabled = true 
+        editTextArea.value === oldText.replace("&#39;","'") ? submitForm.style.fill = 'grey' : submitForm.style.fill = 'green'
+        messageEdited.style.display = 'none'
+
+        function MyFunaction(){
+            editTextArea = document.getElementById('noetArea') 
+            if(editTextArea.value === oldText.replace("&#39;","'")){
+                submitForm.disabled=true 
+                submitForm.style.fill = 'grey'
+                messageEdited.style.display = 'none'
+                editMessageDropDown.innerHTML = 'You must edit your note or title first before saving it.'
+                messageDropDown.style.width = `${200}px`
+            } else {
+                submitForm.disabled=false 
+                submitForm.style.fill = 'green'
+                messageEdited.style.display = 'block'
+                editMessageDropDown.innerHTML = 'Ready to save'
+                messageDropDown.style.width = `${140}px`
+            } 
+        }  
+        
+        let oldTitle = '<%= title %>'
+        let editTitleArea = document.getElementById('titleArea') 
+        let titleEdited = document.getElementById('titleMessageEdited')  
+
+        submitForm.disabled = true 
+        titleEdited.style.display = 'none'
+
+        function MySeconedFunaction(){ 
+
+            editTitleArea = document.getElementById('titleArea')   
+
+            if(editTitleArea.value === oldTitle.replace("&#39;","'")){
+                submitForm.disabled=true
+                submitForm.style.fill = 'grey'
+                titleEdited.style.display = 'none'
+                editMessageDropDown.innerHTML = 'You must edit your note or title first before saving it.'
+                messageDropDown.style.width = `${200}px`
+            } else {
+                submitForm.disabled=false 
+                submitForm.style.fill = 'green'
+                titleEdited.style.display = 'block'
+                editMessageDropDown.innerHTML = 'Ready to save'
+                messageDropDown.style.width = `${140}px`
+            }
+        }
+        
+
+    </script>
+</html>
